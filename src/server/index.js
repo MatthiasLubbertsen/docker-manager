@@ -1,0 +1,1 @@
+// starts the app, nothing else
