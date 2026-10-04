@@ -1,0 +1,34 @@
+{
+  "name": "docker-manager",
+  "version": "1.0.0",
+  "description": "manage yo docker",
+  "keywords": [
+    "docker",
+    "manager",
+    "open",
+    "source",
+    "lightweight"
+  ],
+  "homepage": "https://github.com/MatthiasLubbertsen/docker-manager#readme",
+  "bugs": {
+    "url": "https://github.com/MatthiasLubbertsen/docker-manager/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthiasLubbertsen/docker-manager.git"
+  },
+  "license": "MIT",
+  "author": "MatthiasLubbertsen",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "debug": "^4.4.3",
+    "dockerode": "^5.0.1"
+  }
+}
