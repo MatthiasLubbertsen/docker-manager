@@ -19,7 +19,7 @@
   },
   "license": "MIT",
   "author": "MatthiasLubbertsen",
-  "type": "commonjs",
+  "type": "module",
   "main": "index.js",
   "directories": {
     "test": "tests"
