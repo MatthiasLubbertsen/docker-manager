@@ -1,22 +1,22 @@
 // dockerode wrapper
 import Docker from 'dockerode';
 import { config } from './config.js';
-const docker = new Docker();
+const dockerode = new Docker();
 
-export function dockerWrapper() { }
+export function docker() { }
 
-dockerWrapper.containers.list = async () => {
+docker.containers.list = async () => {
     try {
-        const containers = await docker.listContainers({ all: true });
+        const containers = await dockerode.listContainers({ all: true });
         return containers;
     } catch (error) {
         throw new Error(`Failed to list containers: ${error.message}`);
     }
 };
 
-dockerWrapper.containers.getById = async (id) => {
+docker.containers.getById = async (id) => {
     try {
-        const container = docker.getContainer(id);
+        const container = dockerode.getContainer(id);
         const data = await container.inspect();
         return data;
     } catch (error) {
@@ -24,10 +24,10 @@ dockerWrapper.containers.getById = async (id) => {
     }
 };
 
-dockerWrapper.containers.start = async (id) => {
+docker.containers.start = async (id) => {
     try {
         try {
-            const container = docker.getContainer(id);
+            const container = dockerode.getContainer(id);
         } catch (error) {
             throw new Error(`Container with ID ${id} not found.`);
         }
@@ -38,10 +38,10 @@ dockerWrapper.containers.start = async (id) => {
     }
 };
 
-dockerWrapper.containers.stop = async (id) => {
+docker.containers.stop = async (id) => {
     try {
         try {
-        const container = docker.getContainer(id);
+        const container = dockerode.getContainer(id);
         } catch (error) {
         return { message: `Container with ${id} not found.` };
         }
