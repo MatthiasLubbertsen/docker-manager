@@ -52,11 +52,47 @@ export const dockerWrapper = {
                 throw new Error(`Failed to stop container: ${error.message}`);
             }
         }
+    },
+    compose: {
+        up: async (composeYaml, composeProjectName, build) => {
+            try {
+                const NAME_RE = /^[a-z0-9][a-z0-9_-]*$/; // compose rule
+                if (!NAME_RE.test(composeProjectName)) throw new Error(`Invalid compose project name: ${composeProjectName}.`);
+                
+                const projectDir = path.join(config.STACKS_DIR, composeProjectName);
+                const composePath = path.join(projectDir, 'docker-compose.yml');
+
+                await fs.mkdir(projectDir, { recursive: true });
+                await fs.writeFile(composePath, composeYaml, 'utf8');
+
+                const args = ['compose', '-f', composePath, 'up', '-d'];
+                //'-p', composeProjectName, 
+                if (build) args.push('--build');
+
+                const { stdout, stderr } = await execFileAsync('docker', args, {
+                    cwd: projectDir,
+                    maxBuffer: 10 * 1024 * 1024,
+                });
+                return { projectDir, stdout, stderr };
+            } catch (error) {
+                throw new Error(`Failed to bring up Compose stack: ${error}`);
+            }
+        },
+        down: async (composeProjectName) => {
+            try {
+                const projectDir = path.join(config.STACKS_DIR, composeProjectName);
+                const composePath = path.join(projectDir, 'docker-compose.yml');
+
+                const args = ['compose', '-f', composePath, 'down'];
+
+                const { stdout, stderr } = await execFileAsync('docker', args, {
+                    cwd: projectDir,
+                    maxBuffer: 10 * 1024 * 1024,
+                });
+                return { projectDir, stdout, stderr };
+            } catch (error) {
+                throw new Error(`Failed to bring down Compose stack: ${error}`);
+            }
+        }
     }
 }
-
-// docker.compose.up = async (composeFile, composeProjectName, build) => {
-//     try {
-//         const projectDir = composeProjectName.charAt
-//     }
-// }
