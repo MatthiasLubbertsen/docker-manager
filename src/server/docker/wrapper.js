@@ -2,10 +2,12 @@
 import Docker from 'dockerode';
 import * as config from '../config.js';
 const dockerode = new Docker();
-// import { exec } from 'child_process';
-// import { promises as fs } from 'fs';
-// import path from 'path';
-// import { DATA_DIR, STACKS_DIR } from '../config.js'
+import { execFile } from 'child_process';
+import { promisify } from 'util';
+import { promises as fs } from 'fs';
+import path from 'path';
+
+const execFileAsync = promisify(execFile);
 
 export const dockerWrapper = {
     health: async () => {
